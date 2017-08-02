@@ -60,6 +60,7 @@ public class Registrierung2 extends Startseite {
 	
 	
 	
+	
 	public  Stage pruefung2(Stage pruefung2) throws FileNotFoundException, IOException, ClassNotFoundException {
 		// TODO Auto-generated method stub
 		System.out.println(bnpw.toString());

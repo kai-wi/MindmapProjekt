@@ -2,6 +2,8 @@
 
 package mmap;
 
+import java.awt.MouseInfo;
+import java.awt.Point;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -27,6 +29,7 @@ import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
@@ -136,15 +139,25 @@ public class Mindmap extends Startseite {
 			System.out.println(knotenNameTF.getText());
 		}
 
-		EventHandler<ActionEvent> mindmaperstellen = new EventHandler<ActionEvent>() {
+		EventHandler<MouseEvent> mindmaperstellen = new EventHandler<MouseEvent>() {
 			/*
 			 * Eventhandler für das Erstellen des Knotens
 			 */
 
-			public void handle(ActionEvent event) {
+			public void handle(MouseEvent event) {
 				// TODO Auto-generated method stub
-				double posX = sliderX.getValue()/100*maxX;
-				double posY = sliderY.getValue()/100*maxY;
+//				double posX = sliderX.getValue()/100*maxX;
+//				double posY = sliderY.getValue()/100*maxY;
+				
+				/*
+				 * Knoten wird an der Position der Maus beim klicken erstellt
+				 * 
+				 * 
+				 */
+				
+				double posX = event.getSceneX()- (szene.getWidth()/4);
+				double posY = event.getSceneY();
+				System.out.println(posX);
 				
 				knotenNummer++;
 				New_Knoten knoten = new New_Knoten(posX, posY, knotenNameTF.getText(),
@@ -213,7 +226,8 @@ public class Mindmap extends Startseite {
 			
 		};
 		Zuruck.addEventHandler(ActionEvent.ACTION, Startzuruck);
-		knotenErstellen.addEventHandler(ActionEvent.ACTION, mindmaperstellen);
+//		knotenErstellen.addEventHandler(ActionEvent.ACTION, mindmaperstellen);
+		mindmap_zeichnen.setOnMouseClicked(mindmaperstellen);
 		this.ArrayTest.addEventHandler(ActionEvent.ACTION, ArrayTest);
 		
 		mmStage.setScene(szene);

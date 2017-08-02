@@ -9,6 +9,7 @@ import java.io.ObjectOutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
@@ -53,6 +54,10 @@ public class Functions_Startseite extends Startseite {
 	Path ProjekteDatei = Paths.get("Projekte.dat");
 	Button loadProject = new Button("Projekt laden:");
 	
+	ArrayList<String> UserProjekte = new ArrayList<>();
+	Path UPDatei = Paths.get(benutzername + ".dat");
+	String UPDString = UPDatei.toString();
+	
 	
 	// from register a function to save the
 	// inserted name
@@ -62,21 +67,22 @@ public class Functions_Startseite extends Startseite {
 	public Stage stage1(Stage stage1) throws FileNotFoundException, ClassNotFoundException, IOException {
 		
 		einlesen();
-		System.out.println(Projekte.toString());
 		box.getChildren().addAll(newproject, loadProject, ProjektListe);
 		
 //		Projekte.forEach((k,v)->ProjektListe.getItems().add(k));
 		
-		for (Entry<String, String> entry : Projekte.entrySet()) {
-		    String key = entry.getKey();
-		    String value = entry.getValue();
-		    
-		    if (key.equals(benutzername)) {
-		    	ProjektListe.getItems().add(value);
-		    // ...
-		}			
-			
-		}
+//		for (Entry<String, String> entry : Projekte.entrySet()) {
+//		    String key = entry.getKey();
+//		    String value = entry.getValue();
+//		    
+//		    if (value.equals(benutzername)) {
+//		    	ProjektListe.getItems().add(key);
+//		    // ...
+//		}			
+//			
+//		}
+		
+		
 		
 		
 		bord.setCenter(notes);
@@ -202,10 +208,10 @@ public class Functions_Startseite extends Startseite {
 	void einlesen() throws FileNotFoundException, ClassNotFoundException, IOException {
 		
 		
-		if (Files.exists(ProjekteDatei) && Files.size(ProjekteDatei) != 0) {
-	         ObjectInputStream ois = new ObjectInputStream(new FileInputStream("Projekte.dat"));
+		if (Files.exists(UPDatei) && Files.size(UPDatei) != 0) {
+	         ObjectInputStream ois = new ObjectInputStream(new FileInputStream(UPDString));
 
-			Projekte = (HashMap<String,String>) ois.readObject();
+			UserProjekte = (ArrayList<String>) ois.readObject();
 			ois.close();
 		
 		} 

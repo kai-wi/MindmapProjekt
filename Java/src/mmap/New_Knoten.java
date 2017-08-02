@@ -1,6 +1,9 @@
 package mmap;
 
 
+
+import java.awt.MouseInfo;
+import java.awt.Point;
 //KOmmentar zum testen2345
 import java.io.Serializable;
 
@@ -8,8 +11,6 @@ import javafx.scene.Group;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Line;
-import javafx.scene.shape.Path;
-import javafx.scene.shape.Shape;
 import javafx.scene.text.Text;
 
 public class New_Knoten implements Serializable {
@@ -53,10 +54,16 @@ public class New_Knoten implements Serializable {
 		 * 
 		 */
 
-		Text Knotenname = new Text(name);
+		Text Knotenname = new Text (name);
 		{
 			Knotenname.setX(x);
 			Knotenname.setY(y);
+
+//			Knotenname.setText(name);
+//			Knotenname.setLayoutX(x);
+//			Knotenname.setLayoutY(y);
+//			Knotenname.setBorder(null);
+//			Knotenname.autosize();
 			Knotenname.setTranslateX(Knotenname.getLayoutBounds().getWidth() / 2 * -1);
 			Knotenname.setTranslateY(Knotenname.getLayoutBounds().getHeight() * 0.25);
 		}
@@ -89,7 +96,7 @@ public class New_Knoten implements Serializable {
 
 		
 		
-		
+	
 		Group knotenGruppe = new Group();
 
 		knotenGruppe.getChildren().addAll(line, k1, Knotenname);
@@ -98,7 +105,9 @@ public class New_Knoten implements Serializable {
 		 * Ellipse und Text wird zur Pane mindmap_zeichnen hinzugefügt
 		 */
 
-		mmap.Mindmap.mindmap_zeichnen.getChildren().add(knotenGruppe);
+		mmap.Mindmap.mindmap_zeichnen.getChildren().addAll(knotenGruppe);
+
+
 		
 
 	}

@@ -10,6 +10,7 @@ import java.io.Serializable;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Optional;
 
@@ -17,6 +18,8 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
@@ -42,9 +45,10 @@ public class Projectcreate extends Startseite implements Serializable {
 	HashMap<String,String> Projekte = new HashMap<>();
 	Path ProjekteDatei = Paths.get("Projekte.dat");
 	String Benutzername;
-	
-
-
+	Alert Projektnamevergeben = new Alert(AlertType.WARNING);
+	ArrayList<String> UserProjekte = new ArrayList<>();
+	Path UPDatei = Paths.get(Benutzername + ".dat");
+	String UPDString = UPDatei.toString();
 
 	public Stage newsite(Stage newsite) throws FileNotFoundException, IOException, ClassNotFoundException {
 		// newone.initModality(Modality.APPLICATION_MODAL);
@@ -67,6 +71,8 @@ public class Projectcreate extends Startseite implements Serializable {
 		newone.show();
 		System.out.println("show");
 		szene.getStylesheets().add("Stylesheet1.css");
+		Projektnamevergeben.setTitle("Bitte neuen Namen eingeben!");
+		Projektnamevergeben.setHeaderText("Projekt existiert schon!");
 		
 System.out.println(Benutzername);
 
@@ -143,12 +149,37 @@ System.out.println(Benutzername);
 			ois.close();
 		
 		} 
-				
-		Projekte.put(Benutzername, NPN);
+		
+		if (Files.exists(UPDatei) && Files.size(UPDatei) != 0) {
+	         ObjectInputStream ois = new ObjectInputStream(new FileInputStream(UPDString));
+
+			UserProjekte = (ArrayList<String>) ois.readObject();
+			ois.close();
+		
+		} 
+		
+		if(Projekte.containsKey(NPN)){
+			
+			Projektnamevergeben.showAndWait();
+			
+		}else {
+			
+		
+		Projekte.put(NPN, Benutzername);
+		UserProjekte.add(NPN);
 		
 		try {
 			ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("Projekte.dat"));
 			oos.writeObject(Projekte);
+			oos.close();
+		} catch (IOException e) {
+			
+			e.printStackTrace();
+		}
+		
+		try {
+			ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(UPDString));
+			oos.writeObject(UserProjekte);
 			oos.close();
 		} catch (IOException e) {
 			
@@ -160,7 +191,7 @@ System.out.println(Benutzername);
 			
 		}
 		
-		
+		}
 		
 	}
 }
