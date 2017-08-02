@@ -8,23 +8,23 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Collections;
 
-import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
-import javafx.scene.control.ToolBar;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
@@ -106,13 +106,28 @@ public class Mindmap extends Startseite {
 			for (New_Knoten nk: knotenListe) {
 				New_Knoten kn1 = new New_Knoten (nk.getX(),nk.getY(),nk.getName(),nk.getKnotenNummer()); 
 				}
-			
+	        ObservableList<Node> workingCollection = FXCollections.observableArrayList(mindmap_zeichnen.getChildren());
+	        Collections.swap(workingCollection, workingCollection.size()-2, workingCollection.size()-1);
+	        mindmap_zeichnen.getChildren().setAll(workingCollection);
 		} else {
 			/*
 			 * Erster Knoten wird in der Mitte mit Namen des Projekts erstellt
 			 */
 			
 			New_Knoten erster = new New_Knoten(mindmap_zeichnen.getPrefHeight()/2, mindmap_zeichnen.getPrefWidth()/2, knotenNameTF.getText(), 1);
+			
+			knotenListe.add(erster);
+			
+			
+			try {
+				ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(DateiPfad));
+				oos.writeObject(knotenListe);
+				oos.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
 			
 			sliderX.setValue(50);
 			sliderY.setValue(50);
@@ -139,6 +154,11 @@ public class Mindmap extends Startseite {
 				
 				knotenListe.add(knoten);
 				
+		        ObservableList<Node> workingCollection = FXCollections.observableArrayList(mindmap_zeichnen.getChildren());
+		        Collections.swap(workingCollection, workingCollection.size()-2, workingCollection.size()-1);
+		        mindmap_zeichnen.getChildren().setAll(workingCollection);
+	
+				
 				try {
 					ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(DateiPfad));
 					oos.writeObject(knotenListe);
@@ -147,6 +167,13 @@ public class Mindmap extends Startseite {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+				
+				
+
+				
+				
+				
+				System.out.println(mindmap_zeichnen.getChildren().toString());
 		}
 		};
 			
@@ -175,6 +202,7 @@ public class Mindmap extends Startseite {
 //				Stage s1 = new Stage();
 //				F2.stage1(s1);
 //				s1.show();
+				mindmap_zeichnen.getChildren().clear();
 				mmStage.close();
 				
 			}

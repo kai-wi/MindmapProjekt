@@ -1,0 +1,28 @@
+.root {
+	-fx-background-color: #FFFFFF;
+	-fx-font-size: 18pt;
+
+	
+}
+
+.pane {
+	-fx-background-color: #800000;
+	
+	}
+	
+	
+
+
+.button {
+    -fx-text-fill: #000000;
+    -fx-background-color: #FFFFFF;
+    -fx-border-color: #000000;
+    -fx-border-radius: 5;
+    -fx-padding: 3 6 6 6;
+	
+}
+
+.button:hover
+{
+	-fx-background-color: #A9A9A9;
+	}

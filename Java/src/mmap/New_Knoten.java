@@ -1,9 +1,15 @@
 package mmap;
 
+
+//KOmmentar zum testen
 import java.io.Serializable;
 
+import javafx.scene.Group;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Ellipse;
+import javafx.scene.shape.Line;
+import javafx.scene.shape.Path;
+import javafx.scene.shape.Shape;
 import javafx.scene.text.Text;
 
 public class New_Knoten implements Serializable {
@@ -65,23 +71,35 @@ public class New_Knoten implements Serializable {
 			k1.setCenterY(y);
 			k1.setRadiusX(Knotenname.getLayoutBounds().getWidth() * 0.75);
 			k1.setRadiusY(Knotenname.getLayoutBounds().getHeight());
-			k1.setFill(Color.TRANSPARENT);
+			k1.setFill(Color.WHITE);
 			k1.setStroke(Color.BLACK);
 			k1.setStrokeWidth(1.5);
+		}
 
+		Line line = new Line();
+		{
+			line.setStartX(mmap.Mindmap.mindmap_zeichnen.getPrefWidth() / 2);
+			line.setStartY(mmap.Mindmap.mindmap_zeichnen.getPrefHeight() / 2);
+			line.setEndX(x);
+			line.setEndY(y);
+			line.getStrokeMiterLimit();
+			line.setStrokeMiterLimit(k1.getStrokeWidth());
 		}
 		
+
 		
-		/**
-		 * Speichert die eigenschaften des Knoten in Array
-		 */
+		
+		
+		Group knotenGruppe = new Group();
+
+		knotenGruppe.getChildren().addAll(line, k1, Knotenname);
 
 		/*
 		 * Ellipse und Text wird zur Pane mindmap_zeichnen hinzugefügt
 		 */
 
-		mmap.Mindmap.mindmap_zeichnen.getChildren().add(Knotenname);
-		mmap.Mindmap.mindmap_zeichnen.getChildren().add(k1);
+		mmap.Mindmap.mindmap_zeichnen.getChildren().add(knotenGruppe);
+		
 
 	}
 
