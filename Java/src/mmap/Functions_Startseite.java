@@ -10,6 +10,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashMap;
+import java.util.Map.Entry;
 
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -39,7 +40,8 @@ public class Functions_Startseite extends Startseite {
 	TextArea notes = new TextArea("Notizen");
 	Button logout = new Button("Logout");
 	public Button newproject = new Button("Neues Projekt erstellen");
-	Label username = new Label("Name");
+	String benutzername = "";
+	Label username = new Label("Hallo, " + benutzername + "!");
 	String s;
 	Button PN1 = new Button(s);
 	VBox box = new VBox(10);
@@ -63,7 +65,20 @@ public class Functions_Startseite extends Startseite {
 		System.out.println(Projekte.toString());
 		box.getChildren().addAll(newproject, loadProject, ProjektListe);
 		
-		Projekte.forEach((k,v)->ProjektListe.getItems().add(k));
+//		Projekte.forEach((k,v)->ProjektListe.getItems().add(k));
+		
+		for (Entry<String, String> entry : Projekte.entrySet()) {
+		    String key = entry.getKey();
+		    String value = entry.getValue();
+		    
+		    if (key.equals(benutzername)) {
+		    	ProjektListe.getItems().add(value);
+		    // ...
+		}			
+			
+		}
+		
+		
 		bord.setCenter(notes);
 		bord.setPadding(new Insets(10, 20, 10, 20));
 		username.setMinSize(300, 0);
@@ -93,6 +108,7 @@ public class Functions_Startseite extends Startseite {
 			@Override
 			public void handle(MouseEvent event1) {
 				Projectcreate P2 = new Projectcreate();
+				P2.Benutzername = benutzername;
 				Stage s1 = new Stage();
 				
 				try {

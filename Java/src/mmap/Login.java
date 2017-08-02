@@ -120,7 +120,8 @@ public class Login extends Startseite {
 				if (NameExistiert && PasswortRichtig) {
 					
 					Functions_Startseite F2 = new Functions_Startseite();
-					F2.username.setText("Hallo, " + NameEingegeben+"!");
+					F2.benutzername = NameEingegeben;
+					F2.username.setText("Hallo, " + NameEingegeben + "!");
 					Stage s1 = new Stage();
 					try {
 						F2.stage1(s1);

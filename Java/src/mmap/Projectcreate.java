@@ -41,6 +41,7 @@ public class Projectcreate extends Startseite implements Serializable {
 	String NZC = Zugangscode.getText();
 	HashMap<String,String> Projekte = new HashMap<>();
 	Path ProjekteDatei = Paths.get("Projekte.dat");
+	String Benutzername;
 	
 
 
@@ -67,7 +68,7 @@ public class Projectcreate extends Startseite implements Serializable {
 		System.out.println("show");
 		szene.getStylesheets().add("Stylesheet1.css");
 		
-
+System.out.println(Benutzername);
 
 		EventHandler<MouseEvent> closenew = new EventHandler<MouseEvent>() {
 			@Override
@@ -133,7 +134,7 @@ public class Projectcreate extends Startseite implements Serializable {
 	public void projectsave() throws FileNotFoundException, IOException, ClassNotFoundException  {
 		String NPN = Projektname.getText();
 		String NZC = Zugangscode.getText();
-		System.out.println("Projektname: " + NPN + " " + "Zugangscode: " + NZC);
+	
 		
 		if (Files.exists(ProjekteDatei) && Files.size(ProjekteDatei) != 0) {
 	         ObjectInputStream ois = new ObjectInputStream(new FileInputStream("Projekte.dat"));
@@ -143,7 +144,7 @@ public class Projectcreate extends Startseite implements Serializable {
 		
 		} 
 				
-		Projekte.put(NPN, NZC);
+		Projekte.put(Benutzername, NPN);
 		
 		try {
 			ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("Projekte.dat"));

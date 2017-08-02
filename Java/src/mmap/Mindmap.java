@@ -106,8 +106,10 @@ public class Mindmap extends Startseite {
 			for (New_Knoten nk: knotenListe) {
 				New_Knoten kn1 = new New_Knoten (nk.getX(),nk.getY(),nk.getName(),nk.getKnotenNummer()); 
 				}
+			
+			System.out.println(mindmap_zeichnen.getChildren().toString());
 	        ObservableList<Node> workingCollection = FXCollections.observableArrayList(mindmap_zeichnen.getChildren());
-	        Collections.swap(workingCollection, workingCollection.size()-2, workingCollection.size()-1);
+	        Collections.swap(workingCollection, 0, workingCollection.size()-1);
 	        mindmap_zeichnen.getChildren().setAll(workingCollection);
 		} else {
 			/*
